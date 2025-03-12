@@ -23,8 +23,6 @@ defmodule ChatApp.MixProject do
     [
       {:plug, "~> 1.15.3"},
       {:cowboy, "~> 2.8.0"},
-      {:plug_cowboy, "~> 2.5"},
-      {:websock_adapter, "~> 0.5"},
       {:nitro, "~> 8.2.4"},
       {:n2o, "~> 10.12.4"},
       {:syn, "~> 2.1.1"},

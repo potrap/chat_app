@@ -1,6 +1,7 @@
 defmodule ChatApp.Rooms do
   require NITRO
   require N2O
+  require Logger
 
   def event(:init) do
     :nitro.update(:room1, NITRO.button(id: :room1, postback: {:room, "1"}, body: "Room 1"))
@@ -11,5 +12,9 @@ defmodule ChatApp.Rooms do
   def event({:room, id}) do
     :n2o.session(:room_id, id)
     :nitro.redirect("/app/room.htm")
+  end
+
+  def event({:exit, reason}) do
+    Logger.info("Connection from rooms.htm terminated with reason: #{inspect(reason)}")
   end
 end

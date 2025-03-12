@@ -25,4 +25,8 @@ defmodule ChatApp.Room do
   end
 
   def event(:back), do: :nitro.redirect("/app/rooms.htm")
+
+  def event({:exit, reason}) do
+    Logger.info("Connection from room.htm terminated with reason: #{inspect(reason)}")
+      end
 end

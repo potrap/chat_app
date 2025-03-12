@@ -1,19 +1,12 @@
 defmodule ChatApp.Application do
-  require N2O
   use Application
-  
-  def route(path) do
-    case path do
-      <<"rooms", _::binary>> -> ChatApp.Rooms
-      <<"room", _::binary>> -> ChatApp.Room
-      _ -> :error
-    end
-  end
+  use N2O
 
   def start(_, _) do
-      children = [
-        {Plug.Cowboy, scheme: :http, port: 8001, plug: ChatApp.Router}
-      ]
-      Supervisor.start_link(children, strategy: :one_for_one, name: ChatApp.Supervisor)
+    port = Application.get_env(:n2o, :port, 8001)
+
+    :cowboy.start_clear(:http, [{:port, port}], %{env: %{dispatch: :n2o_cowboy.points()}})
+
+    Supervisor.start_link([], strategy: :one_for_one, name: ChatApp.Supervisor)
   end
 end
